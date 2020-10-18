@@ -1,6 +1,6 @@
 # 서머너즈워 연속전투 알림
 
-## Summoners War notification for repeat battles
+Summoners War notification for repeat battles
 
 
 
