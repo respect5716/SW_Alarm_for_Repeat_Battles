@@ -85,7 +85,6 @@ def main():
             pass
         else:
             patience = 0
-        print(patience)
         time.sleep(60)
 
 if __name__ == '__main__':
