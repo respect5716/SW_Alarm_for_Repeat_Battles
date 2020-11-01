@@ -52,6 +52,6 @@ Pillow==6.1.0
 
 4. 파이썬 코드 실행
 
-```
+```python
 python3 run.py
 ```

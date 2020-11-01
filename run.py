@@ -63,7 +63,8 @@ def check(text):
 def send_message(channel, token):
     text = '연속 전투가 종료되었습니다. 확인 해주세요.'
     client = slack.WebClient(token)
-    client.chat_postMessage(channel=channel, text=text)    
+    client.chat_postMessage(channel=channel, text=text)
+    print(text)    
 
 
 def main():
