@@ -50,7 +50,8 @@ def screenshot(hwnd):
 
 def ocr(img):
     img = np.array(img)
-    assert img.shape[0] > 500, "녹스 플레이어 창을 띄워주세요."
+    if img.shape[0] < 500:
+        return "녹스 플레이어 창을 띄워주세요"
     img = img[380:410, 330:630]
     img = np.where(img < 70, 0, img)
     text = pytesseract.image_to_string(img, lang='kor', config='--psm 4')
@@ -58,13 +59,15 @@ def ocr(img):
     return text
 
 def check(text):
-    return text == '연속 전투가 종료되었습니다.'
+    allowed_text = [
+        "녹스 플레이어 창을 띄워주세요",
+        "연속 전투가 종료되었습니다"
+    ]
+    return text in allowed_text
 
-def send_message(channel, token):
-    text = '연속 전투가 종료되었습니다. 확인 해주세요.'
+def send_message(text, channel, token):
     client = slack.WebClient(token)
     client.chat_postMessage(channel=channel, text=text)
-    print(text)    
 
 
 def main():
@@ -80,7 +83,7 @@ def main():
         text = ocr(img)
         done = check(text)
         if done and patience < 3:
-            send_message('#game', token)
+            send_message(text, '#game', token)
             patience += 1
         elif done:
             pass
