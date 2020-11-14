@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import time
-import slack
+from simplepush import send
 
 import win32gui
 import win32ui
@@ -12,11 +12,6 @@ from PIL import Image
 
 def chdir():
     os.chdir(os.path.dirname(__file__))
-
-def load_token():
-    with open('slack_token.txt', 'r') as f:
-        token = f.read()
-    return token
 
 def screenshot(hwnd):
     left, top, right, bot = win32gui.GetWindowRect(hwnd)
@@ -64,18 +59,13 @@ def check(text):
         "연속 전투가 종료되었습니다"
     ]
     return text in allowed_text
-
-def send_message(text, channel, token):
-    client = slack.WebClient(token)
-    client.chat_postMessage(channel=channel, text=text)
+    
 
 
 def main():
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract'
     hwnd = win32gui.FindWindow(None, '녹스 플레이어')
-    
     chdir()
-    token = load_token()
     patience = 0
 
     while True:
@@ -83,7 +73,7 @@ def main():
         text = ocr(img)
         done = check(text)
         if done and patience < 3:
-            send_message(text, '#game', token)
+            send('Fhg5gw', '서머너즈워', text)
             patience += 1
         elif done:
             pass
