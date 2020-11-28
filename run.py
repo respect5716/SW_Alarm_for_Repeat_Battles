@@ -48,7 +48,6 @@ def ocr(img):
     if img.shape[0] < 500:
         return "녹스 플레이어 창을 띄워주세요"
     img = img[380:410, 330:630]
-    img = np.where(img < 70, 0, img)
     text = pytesseract.image_to_string(img, lang='kor', config='--psm 4')
     text = text.strip()
     return text
@@ -56,7 +55,7 @@ def ocr(img):
 def check(text):
     allowed_text = [
         "녹스 플레이어 창을 띄워주세요",
-        "연속 전투가 종료되었습니다"
+        "연속 전투가 종료되었습니다."
     ]
     return text in allowed_text
     
