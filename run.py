@@ -45,9 +45,9 @@ def screenshot(hwnd):
 
 def ocr(img):
     img = np.array(img)
-    if img.shape[0] < 500:
+    if img.shape[0] < 100:
         return "녹스 플레이어 창을 띄워주세요"
-    img = img[380:410, 330:630]
+    # img = img[380:410, 330:630]
     text = pytesseract.image_to_string(img, lang='kor', config='--psm 4')
     text = text.strip()
     return text
@@ -57,7 +57,10 @@ def check(text):
         "녹스 플레이어 창을 띄워주세요",
         "연속 전투가 종료되었습니다."
     ]
-    return text in allowed_text
+    for allowed in allowed_text:
+        if allowed in text:
+            return allowed
+    return False
     
 
 
@@ -70,8 +73,8 @@ def main():
     while True:
         img = screenshot(hwnd)
         text = ocr(img)
-        done = check(text)
-        if done and patience < 3:
+        text = check(text)
+        if text and patience < 3:
             send('Fhg5gw', '서머너즈워', text)
             patience += 1
         elif done:

@@ -27,6 +27,7 @@ Summoners War notification for repeat battles
 
 * OS : Windows 10
 * Python : 3.7.3
+* Nox Player
 
 ```
 ## requirements.txt
