@@ -59,8 +59,8 @@ def check(text):
     ]
     for allowed in allowed_text:
         if allowed in text:
-            return allowed
-    return False
+            return True, allowed
+    return False, ''
     
 
 
@@ -73,7 +73,7 @@ def main():
     while True:
         img = screenshot(hwnd)
         text = ocr(img)
-        text = check(text)
+        done, text = check(text)
         if text and patience < 3:
             send('Fhg5gw', '서머너즈워', text)
             patience += 1
