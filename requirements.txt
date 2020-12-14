@@ -1,2 +1,3 @@
 simplepush
 pytesseract
+playsound

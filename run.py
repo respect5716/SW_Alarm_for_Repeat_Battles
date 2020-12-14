@@ -2,6 +2,7 @@ import os
 import numpy as np
 import time
 from simplepush import send
+from playsound import playsound
 
 import win32gui
 import win32ui
@@ -76,6 +77,7 @@ def main():
         done, text = check(text)
         if text and patience < 3:
             send('Fhg5gw', '서머너즈워', text)
+            playsound('asset/sound.mp3')
             patience += 1
         elif done:
             pass
