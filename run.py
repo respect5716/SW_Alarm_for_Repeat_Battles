@@ -8,6 +8,7 @@ import win32gui
 import win32ui
 from ctypes import windll
 
+import cv2
 import pytesseract
 from PIL import Image
 
@@ -49,6 +50,7 @@ def ocr(img):
     if img.shape[0] < 100:
         return "녹스 플레이어 창을 띄워주세요"
     # img = img[380:410, 330:630]
+    ret, img = cv2.threshold(img, 140, 255, cv2.THRESH_BINARY)
     text = pytesseract.image_to_string(img, lang='kor', config='--psm 4')
     text = text.strip()
     return text
@@ -75,6 +77,7 @@ def main():
         img = screenshot(hwnd)
         text = ocr(img)
         done, text = check(text)
+        print(text)
         if text and patience < 3:
             send('Fhg5gw', '서머너즈워', text)
             playsound('asset/sound.mp3')
